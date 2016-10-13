@@ -18,10 +18,16 @@ angular.module("myChats").controller("mainCtrl", function($scope, mainSrvc, $int
 
   $scope.addChat = function(chatmessage){
     // TODO Call service to add chats
+    mainSrvc.addChats(chatmessage);
   }
 
   function getChats(){
     // TODO Tell service to get chats
+    mainSrvc.getChats()
+    .then(function(serverchats){
+      $scope.chats = serverchats.data;
+      console.log($scope.chats);
+    })
   }
 
   $scope.deleteChats = function(){
@@ -33,5 +39,10 @@ angular.module("myChats").controller("mainCtrl", function($scope, mainSrvc, $int
 
   // Set up repeating call to get chats
   $interval(getChats, 3000);
+
+  $scope.setScreenname = function(screenname) {
+    mainSrvc.setScreenname(screenname);
+}
+
 
 })
